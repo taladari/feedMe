@@ -11,6 +11,7 @@ function App() {
         <a href="#" id="register">Register</a>
       </div>
       <Login />
+      <div id="footer">&copy; Copyright 2019 feedMe</div>
     </div>
   );
 }
