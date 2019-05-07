@@ -11,23 +11,23 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout, location }) => {
 
     const { pathname } = location;
 
-    const authLinks = (
+    let authLinks = (
         <ul id="nav-links">
-            <li>
+           { pathname !== '/create-profile' && <li>
                 <Link to="/home" className={ pathname === '/home' ? "nav-link current" : "nav-link" }>
                     Home
                 </Link>
-            </li>
-            <li>
+           </li> }
+           { pathname !== '/create-profile' && <li>
                 <Link to="/about" className={ pathname === '/about' ? "nav-link current" : "nav-link" }>
                     About
                 </Link>
-            </li>
-            <li>
+            </li> }
+            { pathname !== '/create-profile' && <li>
                 <Link to="/contact" className={ pathname === '/contact' ? "nav-link current" : "nav-link" }>
                     Contact
                 </Link>
-            </li>
+            </li> }
             <li>
                 <Link to="/logout" className="nav-link">
                     Logout
@@ -39,8 +39,8 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout, location }) => {
     const guestLinks = (
         <ul id="nav-links">
             
-            { location.pathname !== '/register' && <li><Link to="/register" className="nav-link">Register</Link></li> }
-            { location.pathname !== '/' && <li><Link to="/" className="nav-link">Login</Link></li> }
+            { pathname !== '/register' && <li><Link to="/register" className="nav-link">Register</Link></li> }
+            { pathname !== '/' && <li><Link to="/" className="nav-link">Login</Link></li> }
             <li>
                 <Link to="/about" className={ pathname === '/about' ? "nav-link current" : "nav-link" }>
                     About
