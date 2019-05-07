@@ -4,11 +4,14 @@ import { connect } from 'react-redux';
 import { getRecipes } from '../../actions/recipes';
 import { saveProfile } from '../../actions/profile';
 import PropTypes from 'prop-types'
+import Loading from '../Loading/Loading';
+import isEmpty from '../../utils/isEmpty';
 import './CreateProfile.css';
 
 import RecipeRatingBox from '../RecipeRatingBox/RecipeRatingBox';
+import { setAlert } from '../../actions/alert';
 
-const CreateProfile = ({ getRecipes, saveProfile, recipes, user, profile }) => {
+const CreateProfile = ({ getRecipes, saveProfile, setAlert, recipes, user, profile }) => {
 
     const [initialized, setInitialized]  = useState(false);
     const [currentRecipeIndex, setCurrentRecipeIndex] = useState(0);
@@ -19,7 +22,7 @@ const CreateProfile = ({ getRecipes, saveProfile, recipes, user, profile }) => {
             getRecipes(50);
             setInitialized(true);
         }
-    }, [currentRecipeIndex, ratedRecipes]);
+    }, [currentRecipeIndex, ratedRecipes, recipes]);
 
     const onNextRecipe = (e) => {
         onArrowClick(1);
@@ -46,10 +49,14 @@ const CreateProfile = ({ getRecipes, saveProfile, recipes, user, profile }) => {
 
     const onStarClick = (rating) => {
         setRatedRecipes({ ...ratedRecipes, [currentRecipeIndex]: rating });
-        console.log(ratedRecipes);
     };
 
-    if (profile.loaded && profile.result) return <Redirect to="/home" />;
+    if (profile.loaded && profile.result) {
+        setAlert('Profile Created Successfuly', 'success');
+        return <Redirect to="/home" />;
+    }
+
+    if (isEmpty(recipes)) return <Loading />;
 
     const dummyRecipe = {
         desc: '',
@@ -77,11 +84,9 @@ CreateProfile.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    getRecipes: PropTypes.func.isRequired,
-    saveProfile: PropTypes.func.isRequired,
     recipes: state.recipes,
     user: state.auth.user,
     profile: state.profile
 });
 
-export default connect(mapStateToProps, { getRecipes, saveProfile })(CreateProfile);
+export default connect(mapStateToProps, { getRecipes, saveProfile, setAlert })(CreateProfile);

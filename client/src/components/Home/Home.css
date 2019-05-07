@@ -1,0 +1,30 @@
+#feedme-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    height: 200px;
+    width: 200px;
+    border:16px solid rgba(255, 255, 255, .4);
+    border-top:16px solid rgba(255, 255, 255, .2);
+    box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    transition: transform .2s linear;
+    cursor: pointer;
+}
+
+#feedme-btn:hover {
+    transform: rotate(180deg);
+}
+
+p {
+    font-family: 'Raleway', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    transition: transform .2s linear;
+    opacity: .9;
+    color: #254E70;
+}
+
+#feedme-btn:hover p {
+    transform: rotate(180deg);
+}
