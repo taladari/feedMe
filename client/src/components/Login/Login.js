@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { login } from '../../actions/auth';
-import { loadProfile } from '../../actions/profile';
 import PropTypes from 'prop-types';
 import './Login.css';
 
