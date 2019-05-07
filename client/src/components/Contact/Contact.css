@@ -1,0 +1,55 @@
+#contact-title {
+    text-align: center;
+    font-family: 'Raleway', sans-serif;
+    color: rgb(41, 84, 105);
+}
+
+#form-inputs {
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, .4);
+    min-width: 300px;
+    padding: 30px 60px;
+    box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+  }
+
+#contact-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-input {
+    padding: 10px;
+    border: none;
+    outline: none;
+    box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    font-family: 'Raleway', sans-serif;
+    opacity: .9;
+    margin-bottom: 20px;
+}
+
+#message {
+    margin-bottom: 0;
+}
+
+#contact-submit {
+    padding: 5px 10px;
+    background: none;
+    border: none;
+    color: #37718E;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 1.5rem;
+    margin-top: 20px;
+    transition: all .4s linear;
+    width: auto;
+    align-self: center;
+}
+
+  
+  #contact-submit:hover {
+    background-color: rgba(255,255,255, .3);
+  }

@@ -6,6 +6,7 @@ import Logout from './components/Logout/Logout';
 import Home from './components/Home/Home';
 import Navbar from './components/Navbar/Navbar';
 import About from './components/About/About';
+import Contact from './components/Contact/Contact';
 import Footer from './components/Footer/Footer';
 import Register from './components/Register/Register';
 import CreateProfile from './components/CreateProfile/CreateProfile';
@@ -39,6 +40,7 @@ const App = () => {
         <Switch>
           <Route exact path='/register' component={Register} />
           <Route exact path='/about' component={About} />
+          <Route exact path='/contact' component={Contact} />
           <PrivateRoute exact path='/create-profile' component={CreateProfile} />
           <PrivateRoute exact path='/logout' component={Logout} />
           <PrivateRoute exact path='/home' component={Home} />

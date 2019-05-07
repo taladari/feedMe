@@ -55,12 +55,18 @@
 }
 
 
-@media (max-width: 750px) {
+@media (max-width: 755px) {
     #navbar {
         flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 
     #logo-box {
         width: 60%;
+    }
+
+    #nav-links {
+        justify-content: center;
     }
 }

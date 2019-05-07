@@ -8,6 +8,7 @@
     font-size: 1.8rem;
     text-transform: uppercase;
     color: #254E70;
+    padding-top: 10px;
 }
 
 #rating-box {
@@ -34,4 +35,36 @@
 
 .fa-arrow-right:hover, .fa-arrow-left:hover {
     opacity: .5;
+}
+
+
+@media (max-width: 900px) {
+
+    #create-profile-header {
+        text-align: center;
+        font-size: 1.5rem;
+        text-transform: uppercase;
+        color: #254E70;
+        padding-top: 20px;
+    }
+
+    .fa-arrow-right {
+        right: -40px;
+    }
+    
+    .fa-arrow-left {
+        left: -40px;
+    }
+
+}
+
+
+@media (max-width: 550px) {
+    .fa-arrow-right {
+        right: 20px;
+    }
+    
+    .fa-arrow-left {
+        left: 20px;
+    }
 }

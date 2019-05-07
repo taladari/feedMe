@@ -10,6 +10,7 @@
     box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
     font-family: 'Raleway', sans-serif;
     width: 600px;
+    margin-bottom: 50px;
 }
 
 #recipe-rating-box-title {
@@ -30,4 +31,33 @@
     padding: 5px;
     border-radius: 4px;
     margin-bottom: 20px;
+}
+
+@media (max-width: 900px) {
+
+    #recipe-rating-box {
+        padding: 10px 20px;
+        box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+        font-family: 'Raleway', sans-serif;
+        width: 400px;
+        margin-bottom: 50px;
+    }
+
+    #recipe-rating-box-title {
+        font-size: 1rem;
+        opacity: .7;
+        max-width: 60%;
+    }
+
+    #recipe-rating-box-img {
+        max-width: 100%;
+        display: block;
+        height: auto;
+        width: 300px;
+        border: 1px solid #254E70;
+        padding: 5px;
+        border-radius: 4px;
+        margin-bottom: 20px;
+    }
+
 }
