@@ -33,4 +33,4 @@ const RecipeSchema = new Schema({
     }
 });
 
-module.exports = User = mongoose.model('recipes', RecipeSchema);
+module.exports = Recipe = mongoose.model('recipes', RecipeSchema);

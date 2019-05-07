@@ -4,19 +4,16 @@
     background-color: rgba(255, 255, 255, .4);
     min-width: 300px;
     padding: 30px 60px;
-    /* border-radius: 5px; */
     box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
 }
 
 #login-form {
     display: flex;
     flex-direction: column;
-    /* border: 1px solid black; */
 }
 
 .login-input {
     padding: 10px;
-    /* border-radius: 5px; */
     border: none;
     outline: none;
     box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
@@ -26,7 +23,6 @@
 
 #email {
     margin-bottom: 20px;
-
 }
 
 #login-submit {
@@ -40,12 +36,10 @@
     font-weight: 700;
     text-decoration: none;
     font-size: 1.5rem;
-    transition: all .2s linear;
     margin-top: 20px;
     transition: all .4s linear;
-    width: 100px;
+    width: auto;
     align-self: center;
-    /* outline: 1px solid #37718E; */
 }
 
   

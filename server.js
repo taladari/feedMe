@@ -1,23 +1,18 @@
 const express = require('express');
-const mongoose = require('mongoose');
-const config = require('config');
-const passport = require('passport');
+const cors = require('cors');
+const connectDB = require('./config/db');
 
 const port = process.env.PORT || 5000;
 const app = express();
 
-mongoose.connect(config.get('mongoURI'), { useNewUrlParser: true })
-    .then(() => console.log('MongoDB Connected Successfully'))
-    .catch(err => console.log(err));
+connectDB();
 
-app.use(express.json());
-
-// Passport middleware
-app.use(passport.initialize());
-
-// Passport config
-require('./config/passport.js')(passport);
+app.use(cors());
+app.use(express.json({extended: false}));
 
 app.use('/api/users', require('./routes/api/users'));
+app.use('/api/auth', require('./routes/api/auth'));
+app.use('/api/recipes', require('./routes/api/recipes'));
+app.use('/api/profiles', require('./routes/api/profiles'));
 
 app.listen(port, () => console.log(`Server is listening on port ${port}`));

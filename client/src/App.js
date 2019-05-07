@@ -1,19 +1,48 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 import Login from './components/Login/Login';
+import Home from './components/Home/Home';
+import Navbar from './components/Navbar/Navbar';
+import Footer from './components/Footer/Footer';
+import Register from './components/Register/Register';
+import CreateProfile from './components/CreateProfile/CreateProfile';
+import Alert from './components/Alert/Alert';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+import setAuthToken from './utils/setAuthToken';
+import { loadUser } from './actions/auth';
 
-function App() {
-  return (
-    <div className="App">
-      <div id="header">
-        <h1 id="logo">feedMe <i class="fas fa-pizza-slice"></i></h1>
-        <a href="#" id="register">Register</a>
-      </div>
-      <Login />
-      <div id="footer">&copy; Copyright 2019 feedMe</div>
-    </div>
-  );
+
+//Redux
+import { Provider } from 'react-redux';
+import store from './store';
+
+if (localStorage.getItem('token')){
+  setAuthToken(localStorage.getItem('token'));
 }
+
+
+const App = () => {
+
+  useEffect(() => {
+    store.dispatch(loadUser());
+  }, []);
+
+  return <Provider store={store}>
+    <Router>
+      <div className="App">
+        <Navbar />
+        <Route exact path='/' component={Login} />
+        <Alert />
+        <Switch>
+          <Route exact path='/register' component={Register} />
+          <PrivateRoute exact path='/create-profile' component={CreateProfile} />
+          <PrivateRoute exact path='/home' component={Home} />
+        </Switch>
+        <Footer />
+      </div>
+    </Router>
+  </Provider>
+};
 
 export default App;

@@ -1,0 +1,12 @@
+#stars-rating-box {
+    background-color: transparent;
+    font-size: 1.3rem;
+    display: flex;
+    justify-content: center;
+    width: 30%;
+}
+
+.fa-star {
+    cursor: pointer;
+    margin-right: 10px;
+}
