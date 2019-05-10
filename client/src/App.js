@@ -15,6 +15,9 @@ import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import setAuthToken from './utils/setAuthToken';
 import { loadUser } from './actions/auth';
 
+import RecipeSuggestions from './components/RecipeSuggestions/RecipeSuggestions';
+import CookingLoading from './components/CookingLoading/CookingLoading';
+
 
 //Redux
 import { Provider } from 'react-redux';
@@ -44,6 +47,7 @@ const App = () => {
           <PrivateRoute exact path='/create-profile' component={CreateProfile} />
           <PrivateRoute exact path='/logout' component={Logout} />
           <PrivateRoute exact path='/home' component={Home} />
+          <PrivateRoute exact path='/suggestions' component={RecipeSuggestions} />
         </Switch>
         <Footer />
       </div>

@@ -9,7 +9,7 @@ const Logout = ({ logout }) => {
     console.log('logout component');
     useEffect(() => {
         logout();
-    },[]);
+    },[logout]);
 
     return <Redirect to="/" />
 }

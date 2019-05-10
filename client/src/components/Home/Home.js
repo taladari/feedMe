@@ -1,32 +1,37 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Loading from '../Loading/Loading';
+import { withRouter } from 'react-router-dom';
 import './Home.css';
 
-const Home = ({ user, profile }) => {
+const Home = ({ user, profile, history }) => {
 
-        if (profile.loaded && !profile.result) return <Redirect to="/create-profile" />; 
+    const onFeedmeClick = (e) => {
+        history.push('/suggestions');
+    }
 
-        else if (profile.loaded && profile.result) {
-            // show home page
-            return (
-                <div id="feedme-btn">
-                    <p>feed Me</p>
-                </div>
-            );
-        }
-        else {
-            // show loading animation or something
-            return <Loading />
-        }
+    if (profile.loaded && !profile.result) return <Redirect to="/create-profile" />; 
+
+    else if (profile.loaded && profile.result) {
+        // show home page
+        return (
+            <div id="feedme-btn" onClick={ onFeedmeClick }>
+                <p>feed Me</p>
+            </div>
+        );
+    }
+    else {
+        // show loading animation or something
+        return <Loading />
+    }
 
         
 }
 
 Home.propTypes = {
-    user: PropTypes.object.isRequired,
+    user: PropTypes.object,
     profie: PropTypes.object
 };
 
@@ -35,4 +40,4 @@ const mapStateToProps = state => ({
     profile: state.profile
 });
 
-export default connect(mapStateToProps)(Home);
+export default withRouter(connect(mapStateToProps)(Home));

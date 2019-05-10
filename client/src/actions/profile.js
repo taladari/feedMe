@@ -7,7 +7,7 @@ import {
 
 export const loadProfile = (id) => async dispatch => {
     try {
-        const profile = await axios.get(`api/profiles/${id}`); 
+        const profile = await axios.get(`/api/profiles/${id}`); 
         dispatch({
             type: GET_PROFILE_SUCCESS,
             payload: profile.data
@@ -31,7 +31,7 @@ export const saveProfile = (id, ratedRecipes) => async dispatch => {
     const body = JSON.stringify({ id, ratedRecipes });
 
     try {
-        const res = await axios.post(`api/profiles`, body, config); 
+        const res = await axios.post(`/api/profiles`, body, config); 
         dispatch({
             type: SET_PROFILE_SUCCESS,
             payload: res

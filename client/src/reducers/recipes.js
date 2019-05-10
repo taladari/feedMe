@@ -1,4 +1,6 @@
-import { GET_RECIPES_SUCCESS, GET_RECIPES_FAIL } from '../actions/types';
+import { 
+    GET_RECIPES_SUCCESS, 
+    GET_RECIPES_FAIL } from '../actions/types';
 const initialState = [];
 
 export default (state = initialState, action) => {

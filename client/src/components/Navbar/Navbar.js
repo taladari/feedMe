@@ -57,7 +57,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout, location }) => {
     return (
         <nav id="navbar">
             <div id="logo-box">
-                <h1 id="logo">feedMe <i className="fas fa-pizza-slice"></i></h1>               
+                <Link to="/" id="logo">feedMe <i className="fas fa-pizza-slice"></i></Link>               
             </div>
             { !loading && <Fragment>{ isAuthenticated ? authLinks : guestLinks }</Fragment> }
         </nav>

@@ -1,12 +1,36 @@
 const express = require('express');
+const mongoose = require('mongoose');
+const auth = require('../../middleware/auth');
 const User = require('../../models/User');
 const Profile = require('../../models/Profile');
+const Recipe = require('../../models/Recipe');
 
+const getSuggestions = require('../../suggestions/algo');
 
 const router = express.Router();
 
 router.get('/', (req, res) => {
     res.send('Profiles routes');
+});
+
+router.get('/suggestions', auth, async (req, res) => {
+    try {
+        const { id } = req.user;
+        const profile = await Profile.findOne({ user: id });
+        if (!profile) res.status(401).json({ msg: 'User profile not found' });
+
+        const recipesObj = await getSuggestions(profile, 20);
+        let recipes = Object.keys(recipesObj);
+
+        recipes = await Recipe.find({ '_id': { "$in": recipes } });
+
+        res.json(recipes);
+    }
+    catch (err) {
+        console.log(err.message);
+        res.status(500).json({ msg: 'Server error' });
+    }
+
 });
 
 router.get('/:id', async (req, res) => {
@@ -27,7 +51,6 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
     const { id, ratedRecipes } = req.body;
     // check for number of recipes etc
-    console.log('In profile POST route ', ratedRecipes, id);
     try {
         const user = await User.findById(id);      
         if (!user) return res.status(400).json({ msg: 'Could not find requested user'});

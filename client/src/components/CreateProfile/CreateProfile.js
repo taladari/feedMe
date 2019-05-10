@@ -22,7 +22,7 @@ const CreateProfile = ({ getRecipes, saveProfile, setAlert, recipes, user, profi
             getRecipes(50);
             setInitialized(true);
         }
-    }, [currentRecipeIndex, ratedRecipes, recipes]);
+    }, [currentRecipeIndex, ratedRecipes, recipes, getRecipes, initialized]);
 
     const onNextRecipe = (e) => {
         onArrowClick(1);
