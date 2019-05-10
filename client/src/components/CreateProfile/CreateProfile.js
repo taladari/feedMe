@@ -22,6 +22,10 @@ const CreateProfile = ({ getRecipes, saveProfile, setAlert, recipes, user, profi
             getRecipes(50);
             setInitialized(true);
         }
+        if(currentRecipeIndex === recipes.length-1){
+            getRecipes(recipes.length + 10);
+            console.log("50 more added");
+        }
     }, [currentRecipeIndex, ratedRecipes, recipes, getRecipes, initialized]);
 
     const onNextRecipe = (e) => {
