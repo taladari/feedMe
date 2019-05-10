@@ -34,7 +34,6 @@ const CreateProfile = ({ getRecipes, saveProfile, setAlert, recipes, user, profi
 
     const onArrowClick = (direction) => {
         const threes = Object.keys(ratedRecipes).filter(key => parseInt(ratedRecipes[key]) === 3);
-        console.log(recipes);
         if (threes && threes.length === 10) {
             const rated = threes.reduce((result, key) => {
                 result[recipes[key]._id] = ratedRecipes[key];
@@ -69,7 +68,7 @@ const CreateProfile = ({ getRecipes, saveProfile, setAlert, recipes, user, profi
             <h3 id="create-profile-header">Rate The Recipes</h3>
             <div id="rating-box">
                 <i className="fas fa-arrow-left" onClick={onPrevRecipe}></i>
-                <RecipeRatingBox recipe={ recipes[currentRecipeIndex] || dummyRecipe } onStarClick={onStarClick}/>
+                <RecipeRatingBox recipe={ recipes[currentRecipeIndex] || dummyRecipe } onStarClick={onStarClick} ratedRecipes={ratedRecipes} currentRecipeIndex={currentRecipeIndex}/>
                 <i className="fas fa-arrow-right" onClick={onNextRecipe}></i>
             </div>
         </div>

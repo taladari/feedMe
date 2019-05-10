@@ -1,11 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import './StarsRating.css';
 
-const StarsRating = ({ onStarClick, recipe }) => {
+const StarsRating = ({ onStarClick, recipe ,ratedRecipes, currentRecipeIndex}) => {
     const [colors, setColors] = useState(['#ddd', '#ddd', '#ddd']);
-
     useEffect(() => {
-        setColors(['#ddd', '#ddd', '#ddd']);
+        if (ratedRecipes[currentRecipeIndex] != null){
+            let clrs = [];
+            let i = 0;
+            while (i < ratedRecipes[currentRecipeIndex]) {
+                clrs[i] = '#f0a000';
+                i++;
+            }   
+            while (i < colors.length) {
+                clrs[i] = '#ddd';
+                i++;
+            }
+            setColors(clrs);
+        }
+        else {
+            setColors(['#ddd', '#ddd', '#ddd']);
+        }
     }, [recipe]);
 
     const onStarClickInternal = (e) => {
@@ -22,6 +36,7 @@ const StarsRating = ({ onStarClick, recipe }) => {
             i++;
         }
         setColors(clrs);
+
         onStarClick((clrs.filter(c => c === '#f0a000').length));     
     };
 
