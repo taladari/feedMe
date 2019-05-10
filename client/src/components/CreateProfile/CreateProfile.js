@@ -37,11 +37,13 @@ const CreateProfile = ({ getRecipes, saveProfile, setAlert, recipes, user, profi
 
     const onArrowClick = (direction) => {
         const threes = Object.keys(ratedRecipes).filter(key => parseInt(ratedRecipes[key]) === 3);
+        const nonZero = Object.keys(ratedRecipes).filter(key => parseInt(ratedRecipes[key]));
         if (threes && threes.length === 10) {
-            const rated = threes.reduce((result, key) => {
+            const rated = nonZero.reduce((result, key) => {
                 result[recipes[key]._id] = ratedRecipes[key];
                 return result;
             }, {});
+            console.log(rated)
             saveProfile(user._id, rated);
         }
         else {
