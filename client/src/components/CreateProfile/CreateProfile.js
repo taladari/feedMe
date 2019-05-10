@@ -32,7 +32,7 @@ const CreateProfile = ({ getRecipes, saveProfile, setAlert, recipes, user, profi
     };
 
     const onPrevRecipe = (e) => {
-        onArrowClick(-1);
+        currentRecipeIndex > 0 ? onArrowClick(-1):onArrowClick(0);
     };
 
     const onArrowClick = (direction) => {
