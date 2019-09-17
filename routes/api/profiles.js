@@ -4,7 +4,6 @@ const auth = require('../../middleware/auth');
 const User = require('../../models/User');
 const Profile = require('../../models/Profile');
 const Recipe = require('../../models/Recipe');
-
 const getSuggestions = require('../../suggestions/algo');
 
 const router = express.Router();
@@ -68,6 +67,24 @@ router.post('/', async (req, res) => {
         console.log('success');
         return res.json({ msg: "success" });
 
+    } catch (err) {
+        console.log(err.message);
+        return res.status(500).json({ msg: "Failed to save user profile" });
+    }
+});
+
+
+router.post('/rate', auth, async (req, res) => {
+    const { recipeId, score } = req.body;
+    // check for number of recipes etc
+    try {
+        const user = await User.findById(req.user.id).select('-password');      
+        if (!user) return res.status(400).json({ msg: 'Could not find requested user'});
+        profile = await Profile.findOne({ user: user });
+        console.log(profile);
+        profile.ratedRecipes[recipeId] = score;
+        await profile.save();
+        res.json(profile);
     } catch (err) {
         console.log(err.message);
         return res.status(500).json({ msg: "Failed to save user profile" });

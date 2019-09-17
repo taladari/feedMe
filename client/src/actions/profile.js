@@ -3,7 +3,10 @@ import {
     GET_PROFILE_SUCCESS,
     GET_PROFILE_FAIL,
     SET_PROFILE_SUCCESS,
-    SET_PROFILE_FAIL } from './types';
+    SET_PROFILE_FAIL,
+    RATE_RECIPE,
+    RATING_FAILED
+    } from './types';
 
 export const loadProfile = (id) => async dispatch => {
     try {
@@ -44,3 +47,25 @@ export const saveProfile = (id, ratedRecipes) => async dispatch => {
         });
     }
 };
+
+export const rateRecipe = (recipeId, score) => async dispatch =>{
+
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    const body = JSON.stringify({ recipeId, score });
+    try {
+        const res = await axios.post('api/profiles/rate', body, config);
+        dispatch({
+            type: RATE_RECIPE
+        });
+    }
+    catch(err) {
+        dispatch({
+            type: RATING_FAILED
+        })
+    }
+}

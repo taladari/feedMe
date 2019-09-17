@@ -6,18 +6,24 @@ import RecipeSuggestionsBox from '../RecipeSuggestionsBox/RecipeSuggestionsBox';
 import FullRecipe from '../FullRecipe/FullRecipe';
 import CookingLoading from '../CookingLoading/CookingLoading';
 import { getRecipeSuggestions } from '../../actions/suggestions';
-
+import { rateRecipe } from '../../actions/profile';
 import PropTypes from 'prop-types'
 
-const RecipeSuggestions = ({ suggestions: { recipes, loaded }, getRecipeSuggestions, history }) => {
+const RecipeSuggestions = ({ suggestions: { recipes, loaded }, getRecipeSuggestions, rateRecipe }) => {
 
     const [recipeIndex, setRecipeIndex] = useState(0);
     const [showFullRecipe, setshowFullRecipe] = useState(false);
 
     const onSelection = (e) => {
         e.preventDefault();
-        if (e.currentTarget.id.endsWith('dislike')) setRecipeIndex(recipeIndex + 1);
-        else setshowFullRecipe(true);
+        if (e.currentTarget.id.endsWith('dislike')){ 
+            setRecipeIndex(recipeIndex + 1);
+            rateRecipe(recipes[recipeIndex], 1);
+        }
+        else{
+            setshowFullRecipe(true);
+            rateRecipe(recipes[recipeIndex], 2);
+        } 
     };
 
     if (!loaded) {
@@ -39,4 +45,4 @@ const mapStateToProps = state => ({
     suggestions: state.suggestions
 });
 
-export default withRouter(connect(mapStateToProps, { getRecipeSuggestions })(RecipeSuggestions));
+export default withRouter(connect(mapStateToProps, { getRecipeSuggestions, rateRecipe })(RecipeSuggestions));
