@@ -76,15 +76,26 @@ router.post('/', async (req, res) => {
 
 router.post('/rate', auth, async (req, res) => {
     const { recipeId, score } = req.body;
-    // check for number of recipes etc
+
     try {
-        const user = await User.findById(req.user.id).select('-password');      
+        const user = await User.findById(req.user.id).select('-password');  
+        const profile = await Profile.findOne({ user: user })   
         if (!user) return res.status(400).json({ msg: 'Could not find requested user'});
-        profile = await Profile.findOne({ user: user });
-        console.log(profile);
-        profile.ratedRecipes[recipeId] = score;
-        await profile.save();
-        res.json(profile);
+        const idRecipe = recipeId._id
+        const option = { "upsert": false };
+        const query = { user: user };
+        const update = {
+            "$set": {
+              "ratedRecipes": {
+                ...profile.ratedRecipes,
+                [idRecipe]: score
+              }
+            }
+          };
+        await Profile.updateOne(query, update, option).then(result => {
+            console.log(`Successfully added`,profile.ratedRecipes)
+          });
+        res.json({});
     } catch (err) {
         console.log(err.message);
         return res.status(500).json({ msg: "Failed to save user profile" });

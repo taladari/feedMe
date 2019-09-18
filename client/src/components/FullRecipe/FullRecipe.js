@@ -1,12 +1,34 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Redirect } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types'
 import './FullRecipe.scss';
+import { rateRecipe } from '../../actions/profile';
+import { connect } from 'react-redux';
 
-const FullRecipe = ({ recipe, history }) => {
+const FullRecipe = ({ recipe, history, rateRecipe }) => {
+    const [inst, setInst] = useState(false);
     if (!recipe) return <Redirect to="/home" />
+    const instructions = () => {
+        if(inst){
 
+            return (
+                <ul className="recipe-box-section-list">
+                {
+                    recipe.instructions.map((instruct, index) => (
+                        <li className="list-item" key={index}>
+                            { instruct }
+                        </li>
+                    ))
+                }
+                </ul>
+            );
+        }
+        else{
+            return <hr/>
+        }
+
+    }
     return (
         <div className="recipe-box">
             <h3 className="recipe-box-title">{recipe.title}</h3>
@@ -25,17 +47,12 @@ const FullRecipe = ({ recipe, history }) => {
                 </ul>
             </div>
             <div className="recipe-box-section" id="instructions">
-                <h4 className="recipe-box-section-title">Instructions</h4>
+                <button onClick={() => {
+                    setInst(!inst)
+                    console.log(recipe)
+                    rateRecipe(recipe, 3)}} className="recipe-box-section-title">Instructions</button>
                 <hr />
-                <ul className="recipe-box-section-list">
-                {
-                    recipe.instructions.map((instruct, index) => (
-                        <li className="list-item" key={index}>
-                            { instruct }
-                        </li>
-                    ))
-                }
-                </ul>
+                {instructions()}
             </div>
         </div>
     );
@@ -45,5 +62,8 @@ FullRecipe.propTypes = {
     recipe: PropTypes.object.isRequired
 }
 
-export default withRouter(FullRecipe);
+const mapStateToProps = state => ({
+    
+});
 
+export default withRouter(connect(mapStateToProps, { rateRecipe })(FullRecipe));

@@ -6,7 +6,6 @@ const { intersectionLength, sumArray } = require('../suggestions/utils');
 
 const getRecipesRecommendations = (profile, scores) => {
     let recommendations = {};
-
     scores.forEach(score => {
         const otherRecipes = Object.keys(score[1].ratedRecipes);
         const recipes = Object.keys(profile.ratedRecipes);
@@ -92,6 +91,7 @@ const getSimilarProfiles = async profile => {
         let selectedProfiles = [];
         for (let i = 0; i < 5; i++){
             const similar = await SimilarRecipes.findOne({ recipeId: ratedArr[i][0] });
+            //console.log(similar)
             const similarIds = Object.keys(similar.similarRecipes);
             profiles = profiles.map(profile => {
                 const ratedIds = Object.keys(profile.ratedRecipes);

@@ -43,7 +43,7 @@ const CreateProfile = ({ getRecipes, saveProfile, setAlert, recipes, user, profi
                 result[recipes[key]._id] = ratedRecipes[key];
                 return result;
             }, {});
-            console.log(rated)
+            //console.log(rated)
             saveProfile(user._id, rated);
         }
         else {
