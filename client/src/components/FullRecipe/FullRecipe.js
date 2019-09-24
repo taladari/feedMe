@@ -30,9 +30,17 @@ const FullRecipe = ({ recipe, history, rateRecipe }) => {
 
     }
     return (
-        <div className="recipe-box">
+        <div
+         className="recipe-box">
             <h3 className="recipe-box-title">{recipe.title}</h3>
             <div className="recipe-box-section" id="ingredients">
+
+            {/* <div className="backButton">
+               <textPath onClick={() => {alert('ss')}} 
+               className="backButton">Back</textPath>
+                    </div> */}
+                  
+
                 <h4 className="recipe-box-section-title">Ingredients</h4>
                 <hr />
                 <ul className="recipe-box-section-list">
@@ -46,15 +54,22 @@ const FullRecipe = ({ recipe, history, rateRecipe }) => {
                 }
                 </ul>
             </div>
-            <div className="recipe-box-section" id="instructions">
-                <button onClick={() => {
+            <div
+             className="recipe-box-section" id="instructions">
+             <div className="instButton">
+                <button 
+                onClick={() => {
                     setInst(!inst)
                     console.log(recipe)
                     rateRecipe(recipe, 3)}} className="recipe-box-section-title">Instructions</button>
+                    </div>
                 <hr />
                 {instructions()}
             </div>
+
         </div>
+
+          
     );
 }
 
