@@ -4,8 +4,7 @@ const auth = require('../../middleware/auth');
 const User = require('../../models/User');
 const Profile = require('../../models/Profile');
 const Recipe = require('../../models/Recipe');
-const getSuggestions = require('../../suggestions/algo');
-
+const {getSuggestions, parsePreferences} = require('../../suggestions/algo');
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -15,10 +14,11 @@ router.get('/', (req, res) => {
 router.get('/suggestions', auth, async (req, res) => {
     try {
         const { id } = req.user;
+        const user = await User.findById(req.user.id).select('-password');
         const profile = await Profile.findOne({ user: id });
         if (!profile) res.status(401).json({ msg: 'User profile not found' });
-
-        const recipesObj = await getSuggestions(profile, 20);
+        console.log(parsePreferences(user.preference));
+        const recipesObj = await getSuggestions(profile, 20, parsePreferences(user.preference));
         let recipes = Object.keys(recipesObj);
 
         recipes = await Recipe.find({ '_id': { "$in": recipes } });

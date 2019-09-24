@@ -19,6 +19,9 @@ const UserSchema = new Schema({
     register_date: {
         type: Date,
         default: Date.now
+    },
+    preference: {
+        type: mongoose.Schema.Types.Number
     }
 });
 

@@ -30,7 +30,7 @@ router.post(
         return res.status(400).json({errors: errors.array()});
     }
 
-    const { name, email, password } = req.body;  
+    const { name, email, password, preference } = req.body;  
     
     try {
         // See if user already exists
@@ -44,7 +44,8 @@ router.post(
         user = new User({
             name,
             email,
-            password
+            password,
+            preference
         });
 
         // Encrypt pasword 

@@ -18,14 +18,14 @@ const CreateProfile = ({ getRecipes, saveProfile, setAlert, recipes, user, profi
     const [ratedRecipes, setRatedRecipes] = useState({});
 
     useEffect(() => {
-        if (!initialized) {
-            getRecipes(50);
+        if (!initialized && user) {
+            getRecipes(50, user.preference);
             setInitialized(true);
         }
         if(currentRecipeIndex === recipes.length-1){
             getRecipes(recipes.length + 10);
         }
-    }, [currentRecipeIndex, ratedRecipes, recipes, getRecipes, initialized]);
+    }, [currentRecipeIndex, ratedRecipes, recipes, getRecipes, initialized, user]);
 
     const onNextRecipe = (e) => {
         onArrowClick(1);

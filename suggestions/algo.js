@@ -1,7 +1,8 @@
 
 const Profile = require('../models/Profile');
 const SimilarRecipes = require('../models/SimilarRecipes');
-const { intersectionLength, sumArray } = require('../suggestions/utils');
+const { intersectionLength, sumArray, ALL, VEGAN, GLUTEN_FREE } = require('../suggestions/utils');
+const Recipe = require('../models/Recipe');
 
 
 const getRecipesRecommendations = (profile, scores) => {
@@ -113,14 +114,53 @@ const getSimilarProfiles = async profile => {
     }
 };
 
+const filter = (pref, cat) => {
+    for(let i in pref){
+        if(pref[i] == cat){
+            return true;
+        }
+    }
+    return false;
+}
 
-const getSuggestions = async (profile, bound) => {
+const filterByPreference = async (recipes, pref) => {
+    var filtered = {}
+    for(let id in recipes){
+        recipe = await Recipe.findById(id);
+        for(let category in recipe.categories){
+            if(filter(pref, recipe.categories[category])){
+                filtered[recipe._id] = recipes[id];
+                break; 
+            }
+        }
+    }
+    if(Object.keys(filtered).length === 0){
+        return recipes;
+    }
+    return filtered;
+}
+
+const getSuggestions = async (profile, bound, pref) => {
     const similarProfiles = await getSimilarProfiles(profile);
     // console.log('Similar Profiles: ', similarProfiles);
     const scores = findRelevantSuggestions(profile, similarProfiles, bound);
     // console.log('Relevant Suggestions: ', scores);
-    return getRecipesRecommendations(profile, scores);
+    recommendations = getRecipesRecommendations(profile, scores);
+    return await filterByPreference(recommendations, pref)
 };
 
+const parsePreferences = (pref) => {
+    switch(pref){
+        case ALL:
+            return [];
+        case VEGAN:
+            return ["Vegan", "Vegetarian"];
+        case GLUTEN_FREE:
+            return ["Wheat/Gluten-Free"];
+    }
+}
 
-module.exports = getSuggestions;
+module.exports = {
+    getSuggestions,
+    parsePreferences
+};

@@ -1,3 +1,7 @@
+const ALL = 0;
+const VEGAN = 1;
+const GLUTEN_FREE = 2;
+
 const intersectionLength = (arr1, arr2) => {
     return arr1.filter(val => {
         return arr2.indexOf(val) !== -1;
@@ -10,7 +14,12 @@ const sumArray = (arr) => {
     return sum;
 }
 
+
+
 module.exports = {
     intersectionLength,
-    sumArray
+    sumArray,
+    ALL,
+    VEGAN,
+    GLUTEN_FREE
 };
