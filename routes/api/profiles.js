@@ -17,19 +17,22 @@ router.get('/suggestions', auth, async (req, res) => {
         const user = await User.findById(req.user.id).select('-password');
         const profile = await Profile.findOne({ user: id });
         if (!profile) res.status(401).json({ msg: 'User profile not found' });
-        console.log(parsePreferences(user.preference));
-        const recipesObj = await getSuggestions(profile, 20, parsePreferences(user.preference));
-        let recipes = Object.keys(recipesObj);
+        var recipesObj;
+        recipesObj = await getSuggestions(profile, 20, parsePreferences(user.preference));
 
-        recipes = await Recipe.find({ '_id': { "$in": recipes } });
-
+        let recipesKeys = Object.keys(recipesObj);
+        let recipes = []
+        for(let i in recipesKeys){
+            let tmp = await Recipe.findById(recipesKeys[i]);
+            recipes.push(tmp)
+        }
+        //let recipes = await Recipe.find({ '_id': { "$in": recipesKeys } });
         res.json(recipes);
     }
     catch (err) {
         console.log(err.message);
         res.status(500).json({ msg: 'Server error' });
     }
-
 });
 
 router.get('/:id', async (req, res) => {
@@ -92,9 +95,7 @@ router.post('/rate', auth, async (req, res) => {
               }
             }
           };
-        await Profile.updateOne(query, update, option).then(result => {
-            console.log(`Successfully added`,profile.ratedRecipes)
-          });
+        await Profile.updateOne(query, update, option);
         res.json({});
     } catch (err) {
         console.log(err.message);

@@ -8,6 +8,7 @@ import CookingLoading from '../CookingLoading/CookingLoading';
 import { getRecipeSuggestions } from '../../actions/suggestions';
 import { rateRecipe } from '../../actions/profile';
 import PropTypes from 'prop-types'
+import { FaRegArrowAltCircleRight, FaRegArrowAltCircleLeft } from 'react-icons/fa';
 
 const RecipeSuggestions = ({ suggestions: { recipes, loaded }, getRecipeSuggestions, rateRecipe }) => {
 
@@ -16,6 +17,13 @@ const RecipeSuggestions = ({ suggestions: { recipes, loaded }, getRecipeSuggesti
 
     const toggle = () => {
         setshowFullRecipe(!showFullRecipe);
+    }
+
+    const changeRecipe = dir => {
+        if(recipeIndex + dir >= 0 ){
+            setRecipeIndex(recipeIndex + dir);
+        }
+        
     }
 
     const onSelection = (e) => {
@@ -37,7 +45,18 @@ const RecipeSuggestions = ({ suggestions: { recipes, loaded }, getRecipeSuggesti
 
     if (showFullRecipe) return <FullRecipe toggle={toggle} recipe={recipes[recipeIndex]} />;
 
-    return <RecipeSuggestionsBox recipe={recipes[recipeIndex]} onSelection={onSelection} />;
+    return (
+    <div>
+        <div className="box">
+        <button className="nextButton"><FaRegArrowAltCircleLeft size="4em" onClick={() => changeRecipe(-1)}/></button>
+            <RecipeSuggestionsBox recipe={recipes[recipeIndex]} onSelection={onSelection} />
+            <button className="nextButton"><FaRegArrowAltCircleRight size="4em" onClick={() => changeRecipe(1)}/></button>
+        </div>
+    
+    <hr/>
+    
+    </div>
+    );
 }
 
 RecipeSuggestions.propTypes = {

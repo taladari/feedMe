@@ -1,0 +1,14 @@
+.nextButton {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}
+
+.box{
+    display: flex;
+    justify-content: flex-start;
+    align-content: center
+}

@@ -7,6 +7,7 @@
     "nodemon": "^1.19.2",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
+    "react-canvas-js": "^1.0.1",
     "react-dom": "^16.8.6",
     "react-icons": "^3.7.0",
     "react-modal": "^3.8.1",

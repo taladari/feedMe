@@ -1,10 +1,11 @@
 const express = require('express');
 const Recipe = require('../../models/Recipe');
-
+const SimilarRecipes = require('../../models/SimilarRecipes');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-    res.send('Recipes routes');
+    res.send(await SimilarRecipes.find())
+    //res.send('Recipes routes');
 });
 
 router.get('/:num', async (req, res) => {

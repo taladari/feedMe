@@ -12,7 +12,7 @@ const getRecipesRecommendations = (profile, scores) => {
         const recipes = Object.keys(profile.ratedRecipes);
 
         otherRecipes.forEach(recipe => {
-            if (recipes.indexOf(recipe) === -1/* change to === -1 */){
+            if (recipes.indexOf(recipe) !== -1/* change to === -1 */){
                 let weight = score[0] * score[1].ratedRecipes[recipe];
                 if (Object.keys(recommendations).indexOf(recipe) !== -1){
                     const oldVal = recommendations[recipe];
@@ -90,13 +90,15 @@ const getSimilarProfiles = async profile => {
 
         let profiles = await Profile.find();
         let selectedProfiles = [];
-        for (let i = 0; i < 5; i++){
-            const similar = await SimilarRecipes.findOne({ recipeId: ratedArr[i][0] });
-            //console.log(similar)
-            const similarIds = Object.keys(similar.similarRecipes);
-            profiles = profiles.map(profile => {
-                const ratedIds = Object.keys(profile.ratedRecipes);
-                const intersection = intersectionLength(ratedIds, similarIds);
+        var numOfProfiles = 8;
+        for (let i = 0; i < numOfProfiles; i++){
+            const similar = await SimilarRecipes.findOne({ recipeId: ratedArr[i][0] });//find similar recipes
+            //console.log(i,similar)
+            const similarIds = Object.keys(similar.similarRecipes);//similar recipes keys(=id)
+            //for each profile
+            var comparedResult = profiles.map(profile => {
+                const ratedIds = Object.keys(profile.ratedRecipes);//other users profile rated recipes id
+                const intersection = intersectionLength(ratedIds, similarIds);//how many similar recipes this user rate
                 return { 
                     user: profile.user, 
                     ratedRecipes: profile.ratedRecipes, 
@@ -104,11 +106,17 @@ const getSimilarProfiles = async profile => {
                 };
             });
 
-            profiles.sort((p1, p2) => p2.numOfSimilar - p1.numOfSimilar);
-
-            selectedProfiles.push(profiles[0]);
+            comparedResult.sort((p1, p2) => p2.numOfSimilar - p1.numOfSimilar);//sort profiles by common rated recipes
+            if(comparedResult[0].numOfSimilar > 1){ // check if users have common rated recipes
+                selectedProfiles.push(comparedResult[0])
+            }
+            else{
+                numOfProfiles++; 
+            }
+             
         }
         return selectedProfiles;
+        
     } catch (err) {
         console.log(err.message);
     }
@@ -121,7 +129,7 @@ const filter = (pref, cat) => {
         }
     }
     return false;
-}
+};
 
 const filterByPreference = async (recipes, pref) => {
     var filtered = {}
@@ -138,15 +146,6 @@ const filterByPreference = async (recipes, pref) => {
         return recipes;
     }
     return filtered;
-}
-
-const getSuggestions = async (profile, bound, pref) => {
-    const similarProfiles = await getSimilarProfiles(profile);
-    // console.log('Similar Profiles: ', similarProfiles);
-    const scores = findRelevantSuggestions(profile, similarProfiles, bound);
-    // console.log('Relevant Suggestions: ', scores);
-    recommendations = getRecipesRecommendations(profile, scores);
-    return await filterByPreference(recommendations, pref)
 };
 
 const parsePreferences = (pref) => {
@@ -158,7 +157,20 @@ const parsePreferences = (pref) => {
         case GLUTEN_FREE:
             return ["Wheat/Gluten-Free"];
     }
-}
+};
+
+const getSuggestions = async (profile, bound, pref) => {
+    const similarProfiles = await getSimilarProfiles(profile);
+    console.log('Similar Profiles: ', similarProfiles);
+    const scores = findRelevantSuggestions(profile, similarProfiles, bound);
+     //console.log('Relevant Suggestions: ', scores);
+    recommendations = getRecipesRecommendations(profile, scores);
+    //console.log("Recommendation", recommendations)
+    if(pref){
+        return await filterByPreference(recommendations, pref)
+    }
+    return recommendations;
+};
 
 module.exports = {
     getSuggestions,

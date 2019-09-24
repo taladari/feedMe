@@ -10,6 +10,11 @@ const { check, validationResult } = require('express-validator/check');
 
 const router = express.Router();
 
+router.get('/users', async (req, res) => {
+    users =await Profile.find();
+    res.json(users)
+})
+
 // @route  POST /api/users
 // @desc   Registers a new user
 // @access Public

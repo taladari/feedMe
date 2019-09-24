@@ -7,6 +7,8 @@ const RecipeSuggestionsBox = ({ recipe, onSelection }) => {
 
     const [showModal, setShowModal] = useState(false);
 
+
+
     const onImageClick = (e) => {
         setShowModal(true);
     };
