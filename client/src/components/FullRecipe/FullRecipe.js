@@ -5,8 +5,9 @@ import PropTypes from 'prop-types'
 import './FullRecipe.scss';
 import { rateRecipe } from '../../actions/profile';
 import { connect } from 'react-redux';
+import { FaArrowLeft } from 'react-icons/fa';
 
-const FullRecipe = ({ recipe, history, rateRecipe }) => {
+const FullRecipe = ({ recipe, rateRecipe, toggle }) => {
     const [inst, setInst] = useState(false);
     if (!recipe) return <Redirect to="/home" />
     const instructions = () => {
@@ -34,13 +35,7 @@ const FullRecipe = ({ recipe, history, rateRecipe }) => {
          className="recipe-box">
             <h3 className="recipe-box-title">{recipe.title}</h3>
             <div className="recipe-box-section" id="ingredients">
-
-            {/* <div className="backButton">
-               <textPath onClick={() => {alert('ss')}} 
-               className="backButton">Back</textPath>
-                    </div> */}
-                  
-
+                <button className="backButton"><FaArrowLeft size="2em" onClick={toggle}/></button>
                 <h4 className="recipe-box-section-title">Ingredients</h4>
                 <hr />
                 <ul className="recipe-box-section-list">

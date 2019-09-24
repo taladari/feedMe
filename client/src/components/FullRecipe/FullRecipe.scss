@@ -52,11 +52,11 @@ hr {
     justify-content: center;
 }
 
-// .backButton{
-//     color: white;
-//     text-align: center;
-//     display: inline-block;
-//     font-size: 18px;
-//     font-weight: bold;
-
-// }
+.backButton {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}

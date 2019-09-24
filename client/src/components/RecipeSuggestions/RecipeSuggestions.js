@@ -14,6 +14,10 @@ const RecipeSuggestions = ({ suggestions: { recipes, loaded }, getRecipeSuggesti
     const [recipeIndex, setRecipeIndex] = useState(0);
     const [showFullRecipe, setshowFullRecipe] = useState(false);
 
+    const toggle = () => {
+        setshowFullRecipe(!showFullRecipe);
+    }
+
     const onSelection = (e) => {
         e.preventDefault();
         if (e.currentTarget.id.endsWith('dislike')){ 
@@ -31,7 +35,7 @@ const RecipeSuggestions = ({ suggestions: { recipes, loaded }, getRecipeSuggesti
         return <CookingLoading />;
     } 
 
-    if (showFullRecipe) return <FullRecipe recipe={recipes[recipeIndex]} />;
+    if (showFullRecipe) return <FullRecipe toggle={toggle} recipe={recipes[recipeIndex]} />;
 
     return <RecipeSuggestionsBox recipe={recipes[recipeIndex]} onSelection={onSelection} />;
 }
